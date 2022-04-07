@@ -134,19 +134,34 @@ def initialize_myFleet():
 
     myFleet = GameController.initialize_ships()
 
-    print(Fore.GREEN + "Please position your fleet (Game board has size from A to H and 1 to 8) :" + Style.RESET_ALL)
 
-    for ship in myFleet:
-        print()
-        print(Fore.GREEN +
-              f"Please enter the positions for the {ship.name} (size: {ship.size})" + Style.RESET_ALL)
+<< << << < HEAD
+print(Fore.GREEN + "Please position your fleet (Game board has size from A to H and 1 to 8) :" + Style.RESET_ALL)
 
-        for i in range(ship.size):
-            position_input = input(Fore.MAGENTA +
-                                   f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL)
-            ship.add_position(position_input)
-            TelemetryClient.trackEvent('Player_PlaceShipPosition', {'custom_dimensions': {
-                                       'Position': position_input, 'Ship': ship.name, 'PositionInShip': i}})
+for ship in myFleet:
+    print()
+    print(Fore.GREEN +
+          f"Please enter the positions for the {ship.name} (size: {ship.size})" + Style.RESET_ALL)
+
+    for i in range(ship.size):
+        position_input = input(Fore.MAGENTA +
+                               f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL)
+== == == =
+print("\033[0;35;40m Please position your fleet (Game board has size from A to H and 1 to 8) : \033[0;0m")
+
+for ship in myFleet:
+    print()
+    print("\033[0;36;40m")
+    print(
+        f"Please enter the positions for the {ship.name} (size: {ship.size}) \033[0;0m")
+
+    for i in range(ship.size):
+        position_input = input(
+            f"\033[0;38;40m Enter position {i+1} of {ship.size} (i.e A3): \033[0;0m")
+>>>>>> > 45a722af93fa1300d5fbf7d1988a81af733c32a2
+ship.add_position(position_input)
+TelemetryClient.trackEvent('Player_PlaceShipPosition', {'custom_dimensions': {
+    'Position': position_input, 'Ship': ship.name, 'PositionInShip': i}})
 
 
 def initialize_enemyFleet():
