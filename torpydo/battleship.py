@@ -13,9 +13,11 @@ print("Starting")
 myFleet = []
 enemyFleet = []
 
+
 def main():
     TelemetryClient.init()
-    TelemetryClient.trackEvent('ApplicationStarted', {'custom_dimensions': {'Technology': 'Python'}})
+    TelemetryClient.trackEvent('ApplicationStarted', {
+                               'custom_dimensions': {'Technology': 'Python'}})
     colorama.init()
     print(Fore.YELLOW + r"""
                                     |__
@@ -36,13 +38,14 @@ def main():
 
     start_game()
 
+
 def start_game():
     global myFleet, enemyFleet
     # clear the screen
-    if(platform.system().lower()=="windows"):
-        cmd='cls'
+    if(platform.system().lower() == "windows"):
+        cmd = 'cls'
     else:
-        cmd='clear'   
+        cmd = 'clear'
     os.system(cmd)
     print(r'''
                   __
@@ -57,12 +60,12 @@ def start_game():
      """"""""''')
     while True:
         print()
-        print("Player, it's your turn")
-        position = parse_position(input("Enter coordinates for your shot:"))
+        print(Fore.GREEN + "Player, it's your turn" + Style.RESET_ALL)
+        position = parse_position(
+            input(Fore.GREEN + "Enter coordinates for your shot:" + Style.RESET_ALL))
         is_hit = GameController.check_is_hit(enemyFleet, position)
         if is_hit:
-            print("\033[0;31;40m")
-            print(r'''
+            print(Fore.RED + r'''
                 \          .  ./
               \   .:"";'.:..""   /
                  (M^^.^~~:.'"").
@@ -70,28 +73,27 @@ def start_game():
                ((| :. ~ ^  :. .|))
             -   (\- |  \ /  |  /)  -
                  -\  \     /  /-
-                   \  \   /  /''')
-            print("\033[0;0m")
+                   \  \   /  /''' + Style.RESET_ALL)
 
-        print("\033[0;34;47m Yeah ! Nice hit ! \033[0;0m" if is_hit else "\033[0;36;40m Miss \033[0;0m")
-        print("##################################################################################")
-        TelemetryClient.trackEvent('Player_ShootPosition', {'custom_dimensions': {'Position': str(position), 'IsHit': is_hit}})
+        print(Fore.RED + "Yeah ! Nice hit !" +
+              Style.RESET_ALL if is_hit else Fore.BLUE + "Miss")
+        print(Fore.WHITE + "##################################################################################" + Style.RESET_ALL)
+        TelemetryClient.trackEvent('Player_ShootPosition', {'custom_dimensions': {
+                                   'Position': str(position), 'IsHit': is_hit}})
 
         position = get_random_position()
         is_hit = GameController.check_is_hit(myFleet, position)
         print()
-        hit = "\033[0;31;47m hit your ship! \033[0;0m"
-        miss = "\033[0;36;47m Miss \033[0;0m"
-        print(f"Computer shoot in {str(position)}" )
+        print(Fore.GREEN + f"Computer shoot in {str(position)}")
         if is_hit:
-            print(hit)
+            print(Fore.RED + "and hits your Ship!")
         else:
-            print(miss)
-        print("##################################################################################")
-        TelemetryClient.trackEvent('Computer_ShootPosition', {'custom_dimensions': {'Position': str(position), 'IsHit': is_hit}})
+            print(Fore.BLUE + "Miss")
+        print(Fore.WHITE + "##################################################################################" + Style.RESET_ALL)
+        TelemetryClient.trackEvent('Computer_ShootPosition', {'custom_dimensions': {
+                                   'Position': str(position), 'IsHit': is_hit}})
         if is_hit:
-            print("\033[0;31;40m")
-            print(r'''
+            print(Fore.RED + r'''
                 \          .  ./
               \   .:"";'.:..""   /
                  (M^^.^~~:.'"").
@@ -99,8 +101,8 @@ def start_game():
                ((| :. ~ ^  :. .|))
             -   (\- |  \ /  |  /)  -
                  -\  \     /  /-
-                   \  \   /  / ''')
-            print("\033[0;0m")
+                   \  \   /  / ''' + Style.RESET_ALL)
+
 
 def parse_position(input: str):
     letter = Letter[input.upper()[:1]]
@@ -108,6 +110,7 @@ def parse_position(input: str):
     position = Position(letter, number)
 
     return Position(letter, number)
+
 
 def get_random_position():
     rows = 8
@@ -119,26 +122,32 @@ def get_random_position():
 
     return position
 
+
 def initialize_game():
     initialize_myFleet()
 
     initialize_enemyFleet()
+
 
 def initialize_myFleet():
     global myFleet
 
     myFleet = GameController.initialize_ships()
 
-    print("Please position your fleet (Game board has size from A to H and 1 to 8) :")
+    print(Fore.GREEN + "Please position your fleet (Game board has size from A to H and 1 to 8) :" + Style.RESET_ALL)
 
     for ship in myFleet:
         print()
-        print(f"Please enter the positions for the {ship.name} (size: {ship.size})")
+        print(Fore.GREEN +
+              f"Please enter the positions for the {ship.name} (size: {ship.size})" + Style.RESET_ALL)
 
         for i in range(ship.size):
-            position_input = input(f"Enter position {i+1} of {ship.size} (i.e A3):")
+            position_input = input(Fore.MAGENTA +
+                                   f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL)
             ship.add_position(position_input)
-            TelemetryClient.trackEvent('Player_PlaceShipPosition', {'custom_dimensions': {'Position': position_input, 'Ship': ship.name, 'PositionInShip': i}})
+            TelemetryClient.trackEvent('Player_PlaceShipPosition', {'custom_dimensions': {
+                                       'Position': position_input, 'Ship': ship.name, 'PositionInShip': i}})
+
 
 def initialize_enemyFleet():
     global enemyFleet
@@ -166,6 +175,7 @@ def initialize_enemyFleet():
 
     enemyFleet[4].positions.append(Position(Letter.C, 5))
     enemyFleet[4].positions.append(Position(Letter.C, 6))
+
 
 if __name__ == '__main__':
     main()
