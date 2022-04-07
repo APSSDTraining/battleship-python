@@ -30,8 +30,10 @@ class GameController(object):
         for ship in ships:
            if not ship.isDestroyed:
                alive_ships.append(ship.name)
-
-        return alive_ships
+        if len(alive_ships) >0:
+            return alive_ships
+        else:
+            return False    
 
 
     def check_is_destroyed(ships: list):

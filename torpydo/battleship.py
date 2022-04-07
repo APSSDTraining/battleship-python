@@ -78,6 +78,10 @@ def start_game():
         if isDestroyed:
             print("You Sunk Their Battleship")
         ships_left = GameController.get_alive(enemyFleet)
+        if not ships_left:
+            print(f"{Fore.GREEN}YOU WON!{Style.RESET_ALL}")
+            return
+        
         print(', '.join(str(e) for e in ships_left) )    
         position = get_random_position()
         is_hit = GameController.check_is_hit(myFleet, position)
@@ -94,6 +98,13 @@ def start_game():
             -   (\- |  \ /  |  /)  -
                  -\  \     /  /-
                    \  \   /  /''')
+        isDestroyed = GameController.check_is_destroyed(myFleet)
+        if isDestroyed:
+            print("The Enemy Sunk Your Battleship")
+        ships_left = GameController.get_alive(myFleet)
+        if not ships_left:
+            print(f"{Fore.RED}YOU LOST!{Style.RESET_ALL}")
+            return
 
 def parse_position(input: str):
     letter = Letter[input.upper()[:1]]
