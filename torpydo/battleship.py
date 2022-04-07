@@ -77,6 +77,8 @@ def start_game():
         isDestroyed = GameController.check_is_destroyed(enemyFleet)
         if isDestroyed:
             print("You Sunk Their Battleship")
+        ships_left = GameController.get_alive(enemyFleet)
+        print(', '.join(str(e) for e in ships_left) )    
         position = get_random_position()
         is_hit = GameController.check_is_hit(myFleet, position)
         print()

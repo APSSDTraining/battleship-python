@@ -22,6 +22,18 @@ class GameController(object):
 
         return False
 
+    def get_alive(ships: list):
+        if ships is None:
+            raise ValueError('ships is null')
+
+        alive_ships = []
+        for ship in ships:
+           if not ship.isDestroyed:
+               alive_ships.append(ship.name)
+
+        return alive_ships
+
+
     def check_is_destroyed(ships: list):
         if ships is None:
             raise ValueError('ships is null')
