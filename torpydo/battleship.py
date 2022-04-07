@@ -55,13 +55,13 @@ def start_game():
    |     /_\
     \    \_/
      """"""""''')
-
     while True:
         print()
         print("Player, it's your turn")
-        position = parse_position(input("Enter coordinates for your shot :"))
+        position = parse_position(input("Enter coordinates for your shot:"))
         is_hit = GameController.check_is_hit(enemyFleet, position)
         if is_hit:
+            print("\033[0;31;40m")
             print(r'''
                 \          .  ./
               \   .:"";'.:..""   /
@@ -71,16 +71,26 @@ def start_game():
             -   (\- |  \ /  |  /)  -
                  -\  \     /  /-
                    \  \   /  /''')
+            print("\033[0;0m")
 
-        print("Yeah ! Nice hit !" if is_hit else "Miss")
+        print("\033[0;34;47m Yeah ! Nice hit ! \033[0;0m" if is_hit else "\033[0;36;40m Miss \033[0;0m")
+        print("##################################################################################")
         TelemetryClient.trackEvent('Player_ShootPosition', {'custom_dimensions': {'Position': str(position), 'IsHit': is_hit}})
 
         position = get_random_position()
         is_hit = GameController.check_is_hit(myFleet, position)
         print()
-        print(f"Computer shoot in {str(position)} and {'hit your ship!' if is_hit else 'miss'}")
+        hit = "\033[0;31;47m hit your ship! \033[0;0m"
+        miss = "\033[0;36;47m Miss \033[0;0m"
+        print(f"Computer shoot in {str(position)}" )
+        if is_hit:
+            print(hit)
+        else:
+            print(miss)
+        print("##################################################################################")
         TelemetryClient.trackEvent('Computer_ShootPosition', {'custom_dimensions': {'Position': str(position), 'IsHit': is_hit}})
         if is_hit:
+            print("\033[0;31;40m")
             print(r'''
                 \          .  ./
               \   .:"";'.:..""   /
@@ -89,7 +99,8 @@ def start_game():
                ((| :. ~ ^  :. .|))
             -   (\- |  \ /  |  /)  -
                  -\  \     /  /-
-                   \  \   /  /''')
+                   \  \   /  / ''')
+            print("\033[0;0m")
 
 def parse_position(input: str):
     letter = Letter[input.upper()[:1]]
