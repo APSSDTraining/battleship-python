@@ -74,7 +74,9 @@ def start_game():
 
         print("Yeah ! Nice hit !" if is_hit else "Miss")
         TelemetryClient.trackEvent('Player_ShootPosition', {'custom_dimensions': {'Position': str(position), 'IsHit': is_hit}})
-
+        isDestroyed = GameController.check_is_destroyed(enemyFleet)
+        if isDestroyed:
+            print("You Sunk Their Battleship")
         position = get_random_position()
         is_hit = GameController.check_is_hit(myFleet, position)
         print()
