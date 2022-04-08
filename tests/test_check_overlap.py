@@ -18,10 +18,10 @@ class TestCheckIsHorizontalVertical(unittest.TestCase):
     def test_OverlapA1A2_NewPositionA2_Valid(self):
         myFleet = []
         ship = init_ship(Ship("Test", 5, Color.RED), [
-                       Position(Letter.A, 1), Position(Letter.A, 2)])
+            Position(Letter.A, 1), Position(Letter.A, 2)])
         myFleet.append(ship)
         newPosition = Position(Letter.A, 2)
-        self.assertFalse(battleship.check_overlap(myFleet, newPosition)
+        self.assertFalse(battleship.check_overlap(myFleet, newPosition))
 
     # def test_ShipA1A2_NewPositionB2_Invalid(self):
     #     ship = init_ship(Ship("Test", 5, Color.RED), [Position(Letter.A,1), Position(Letter.A,2)])
