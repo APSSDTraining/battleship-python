@@ -77,12 +77,12 @@ def start_game():
 
         print(Fore.RED + "Yeah ! Nice hit !" +
               Style.RESET_ALL if is_hit else Fore.BLUE + "Miss")
-        
+
         isDestroyed = GameController.check_is_destroyed(enemyFleet)
         if isDestroyed:
             print(Fore.GREEN+"You sunk their " + isDestroyed+Style.RESET_ALL)
         ships_left = GameController.get_alive(enemyFleet)
-        print(Fore.GREEN+', '.join(str(e) for e in ships_left)+Style.RESET_ALL)    
+        print(Fore.GREEN+', '.join(str(e) for e in ships_left)+Style.RESET_ALL)
         print(Fore.WHITE + "##################################################################################" + Style.RESET_ALL)
         TelemetryClient.trackEvent('Player_ShootPosition', {'custom_dimensions': {
                                    'Position': str(position), 'IsHit': is_hit}})
@@ -151,7 +151,7 @@ def initialize_myFleet():
             is_valid = "invalid"
             while(is_valid != ""):
                 position_input = input(Fore.MAGENTA +
-                                    f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL) 
+                                       f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL)
                 is_valid = validPosition(myFleet, position_input, ship)
                 if (is_valid != ""):
                     print(is_valid)
@@ -187,32 +187,30 @@ def initialize_enemyFleet():
     enemyFleet[4].positions.append(Position(Letter.C, 5))
     enemyFleet[4].positions.append(Position(Letter.C, 6))
 
-def check_overlap(myFleet, new_position:Position):
+
+def check_overlap(myFleet, new_position: Position):
+    for ship in myFleet:
+        for position in ship:
+            if position == new_position:
+                return False
     return True
 
 
- 
-
-def check_noGaps(current_ship:Ship, new_position:Position):
+def check_noGaps(current_ship: Ship, new_position: Position):
     return True
 
 
- 
-
-def check_correctSize(current_ship:Ship, new_position:Position):
+def check_correctSize(current_ship: Ship, new_position: Position):
     return True
 
 
- 
-
-def check_playingField(new_position:Position):
+def check_playingField(new_position: Position):
     return True
 
 
- 
-
-def validPosition(myFleet, new_position:Position, current_ship:Ship):
+def validPosition(myFleet, new_position: Position, current_ship: Ship):
     return ""
+
 
 if __name__ == '__main__':
     main()
