@@ -40,7 +40,7 @@ class GameController(object):
 
         for ship in ships:
             if(len(ship.hitPositions) == len(ship.positions)):
-                return True
+                return ship.name
 
         return False
 

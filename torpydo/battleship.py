@@ -76,9 +76,9 @@ def start_game():
         TelemetryClient.trackEvent('Player_ShootPosition', {'custom_dimensions': {'Position': str(position), 'IsHit': is_hit}})
         isDestroyed = GameController.check_is_destroyed(enemyFleet)
         if isDestroyed:
-            print("You Sunk Their Battleship")
+            print(Fore.GREEN+"You sunk their " + isDestroyed+Style.RESET_ALL)
         ships_left = GameController.get_alive(enemyFleet)
-        print(', '.join(str(e) for e in ships_left) )    
+        print(Fore.GREEN+', '.join(str(e) for e in ships_left)+Style.RESET_ALL)    
         position = get_random_position()
         is_hit = GameController.check_is_hit(myFleet, position)
         print()
