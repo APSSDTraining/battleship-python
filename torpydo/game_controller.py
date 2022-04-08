@@ -7,7 +7,7 @@ class GameController(object):
     def check_is_hit(ships: list, shot: Position):
         if ships is None:
             raise ValueError('ships is null')
-
+            
         if shot is None:
             raise ValueError('shot is null')
 
