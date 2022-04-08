@@ -182,6 +182,32 @@ def initialize_enemyFleet():
     enemyFleet[4].positions.append(Position(Letter.C, 5))
     enemyFleet[4].positions.append(Position(Letter.C, 6))
 
+def check_overlap(myFleet, new_position:Position):
+    return True
+
+
+ 
+
+def check_noGaps(current_ship:Ship, new_position:Position):
+    return True
+
+
+ 
+
+def check_correctSize(current_ship:Ship, new_position:Position):
+    return True
+
+
+ 
+
+def check_playingField(new_position:Position):
+    return True
+
+
+ 
+
+def validPosition(myFleet, new_position:Position, current_ship:Ship):
+    return ""
 
 if __name__ == '__main__':
     main()
