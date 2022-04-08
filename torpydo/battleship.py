@@ -148,8 +148,13 @@ def initialize_myFleet():
               f"Please enter the positions for the {ship.name} (size: {ship.size})" + Style.RESET_ALL)
 
         for i in range(ship.size):
-            position_input = input(Fore.MAGENTA +
-                                   f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL)
+            is_valid = "invalid"
+            while(is_valid != ""):
+                position_input = input(Fore.MAGENTA +
+                                    f"Enter position {i+1} of {ship.size} (i.e A3):"+Style.RESET_ALL) 
+                is_valid = validPosition(myFleet, position_input, ship)
+                if (is_valid != ""):
+                    print(is_valid)
             ship.add_position(position_input)
             TelemetryClient.trackEvent('Player_PlaceShipPosition', {'custom_dimensions': {
                                        'Position': position_input, 'Ship': ship.name, 'PositionInShip': i}})
