@@ -62,7 +62,7 @@ def start_game():
         print()
         print(Fore.GREEN + "Player, it's your turn" + Style.RESET_ALL)
         position = parse_position(
-            input(Fore.GREEN + "Enter coordinates for your shot:" + Style.RESET_ALL))
+            input(Fore.MAGENTA + "Enter coordinates for your shot:" + Style.RESET_ALL))
         is_hit = GameController.check_is_hit(enemyFleet, position)
         if is_hit:
             print(Fore.RED + r'''
